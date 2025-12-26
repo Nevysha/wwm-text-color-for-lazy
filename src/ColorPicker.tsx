@@ -1,14 +1,19 @@
-import {SketchPicker} from 'react-color'
-import {Box} from "@mui/material";
+import { SketchPicker } from 'react-color';
+import { Box } from '@mui/material';
 
-export const ColorPicker = ({color, setColor}) => {
-
+export const ColorPicker = ({
+  color,
+  setColor,
+}: {
+  color: string;
+  setColor: (color: string) => void;
+}) => {
   return (
     <Box>
       <SketchPicker
         color={color}
-        onChangeComplete={({hex}) => setColor(hex)}
+        onChangeComplete={({ hex }) => setColor(hex)}
       />
     </Box>
-  )
-}
+  );
+};

@@ -1,12 +1,18 @@
-import {type Dispatch, type SetStateAction, useEffect, useState} from 'react'
-import {Button, Divider, Paper, Stack, TextField, Typography} from "@mui/material";
-import {ColorPicker} from "./ColorPicker.tsx";
-import {Topbar} from "./Topbar.tsx";
+import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
+import {
+  Button,
+  Divider,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { ColorPicker } from './ColorPicker.tsx';
+import { Topbar } from './Topbar.tsx';
 
 let initFlag = false;
 
 const App = () => {
-
   const [colorFrom, setColorFrom] = useState('#bd10e0');
   const [colorTo, setColorTo] = useState('#ffffff');
   const [rawText, setRawText] = useState('Nevysha is so cute tbh');
@@ -14,13 +20,9 @@ const App = () => {
   const [coloredText, setColoredText] = useState(rawText);
 
   const applyColor = () => {
-    setTextToCopy(
-      `${colorFrom} ${rawText}`
-    )
-    setColoredText(
-      `<span style="color: ${colorFrom}">${rawText}</span>`
-    )
-  }
+    setTextToCopy(`${colorFrom} ${rawText}`);
+    setColoredText(`<span style="color: ${colorFrom}">${rawText}</span>`);
+  };
 
   const interpolateColor = (hex: string, targetHex: string, factor: number) => {
     const r1 = parseInt(hex.slice(1, 3), 16);
@@ -44,7 +46,7 @@ const App = () => {
 
     for (let i = 0; i < rawText.length; i++) {
       const char = rawText[i];
-      const factor = i / (rawText.length > 1 ? rawText.length - 1 : 1) * 0.7;
+      const factor = (i / (rawText.length > 1 ? rawText.length - 1 : 1)) * 0.7;
       const blendedHex = interpolateColor(colorFrom, '#ffffff', factor);
 
       resultTextToCopy += `${blendedHex}${char}`;
@@ -53,7 +55,7 @@ const App = () => {
 
     setTextToCopy(resultTextToCopy);
     setColoredText(resultColoredText);
-  }
+  };
 
   const applyColorGradiantToDark = () => {
     let resultTextToCopy = '';
@@ -61,7 +63,7 @@ const App = () => {
 
     for (let i = 0; i < rawText.length; i++) {
       const char = rawText[i];
-      const factor = i / (rawText.length > 1 ? rawText.length - 1 : 1) * 0.7;
+      const factor = (i / (rawText.length > 1 ? rawText.length - 1 : 1)) * 0.7;
       const blendedHex = interpolateColor(colorFrom, '#000000', factor);
 
       resultTextToCopy += `${blendedHex}${char}`;
@@ -70,7 +72,7 @@ const App = () => {
 
     setTextToCopy(resultTextToCopy);
     setColoredText(resultColoredText);
-  }
+  };
 
   const applyColorGradientBetween = () => {
     let resultTextToCopy = '';
@@ -87,70 +89,86 @@ const App = () => {
 
     setTextToCopy(resultTextToCopy);
     setColoredText(resultColoredText);
-  }
+  };
 
-  const safeSetColor = (newColor: string, setter: Dispatch<SetStateAction<string>>) => {
+  const safeSetColor = (
+    newColor: string,
+    setter: Dispatch<SetStateAction<string>>,
+  ) => {
     // ensure strict hex format with 6 digits. Convert shorthand to full form
     let hex = newColor.replace('#', '');
     if (hex.length === 3) {
-      hex = hex.split('').map(c => c + c).join('');
+      hex = hex
+        .split('')
+        .map((c) => c + c)
+        .join('');
     }
     hex = hex.toLowerCase();
     setter('#' + hex);
-  }
+  };
 
   useEffect(() => {
     if (initFlag) return;
     initFlag = true;
 
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    applyColorGradientBetween()
-  }, [applyColorGradientBetween])
+    applyColorGradientBetween();
+  }, [applyColorGradientBetween]);
 
   return (
-    <Stack sx={{gap: '10px'}}>
+    <Stack sx={{ gap: '10px' }}>
       <Topbar />
       <TextField
-        id="multiline-static"
-        label="Your Text"
+        id='multiline-static'
+        label='Your Text'
         multiline
         rows={4}
         onChange={(e) => setRawText(e.target.value)}
         value={rawText}
-        // defaultValue={rawText}
       />
 
       <Divider />
 
-      <Stack direction="row" spacing={2}>
-        <ColorPicker color={colorFrom} setColor={(color: string) => safeSetColor(color, setColorFrom)}/>
-        <ColorPicker color={colorTo} setColor={(color: string) => safeSetColor(color, setColorTo)}/>
+      <Stack
+        direction='row'
+        spacing={2}
+      >
+        <ColorPicker
+          color={colorFrom}
+          setColor={(color: string) => safeSetColor(color, setColorFrom)}
+        />
+        <ColorPicker
+          color={colorTo}
+          setColor={(color: string) => safeSetColor(color, setColorTo)}
+        />
       </Stack>
 
       <Button onClick={applyColor}>Apply Simple</Button>
-      <Button onClick={applyColorGradiantToLight}>Apply Gradiant from color1 to light</Button>
-      <Button onClick={applyColorGradiantToDark}>Apply Gradiant from color1 to dark</Button>
-      <Button onClick={applyColorGradientBetween}>Apply Gradiant Between color1 and color2</Button>
+      <Button onClick={applyColorGradiantToLight}>
+        Apply Gradiant from color1 to light
+      </Button>
+      <Button onClick={applyColorGradiantToDark}>
+        Apply Gradiant from color1 to dark
+      </Button>
+      <Button onClick={applyColorGradientBetween}>
+        Apply Gradiant Between color1 and color2
+      </Button>
 
       <Paper>
-        <Stack sx={{padding: '10px'}}>
-          <Typography>
-            Preview:
-          </Typography>
-          <div dangerouslySetInnerHTML={{__html: coloredText}}></div>
+        <Stack sx={{ padding: '10px' }}>
+          <Typography>Preview:</Typography>
+          <div dangerouslySetInnerHTML={{ __html: coloredText }}></div>
         </Stack>
       </Paper>
 
       <Paper>
-        <Stack sx={{padding: '10px'}}>
-          <Typography>
-            Copy in game:
-          </Typography>
-          <div dangerouslySetInnerHTML={{__html: textToCopy}}></div>
+        <Stack sx={{ padding: '10px' }}>
+          <Typography>Copy in game:</Typography>
+          <div dangerouslySetInnerHTML={{ __html: textToCopy }}></div>
         </Stack>
       </Paper>
     </Stack>
-  )
-}
+  );
+};
 
-export default App
+export default App;
