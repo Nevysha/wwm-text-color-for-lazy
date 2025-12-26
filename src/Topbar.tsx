@@ -1,8 +1,7 @@
-import {Box, IconButton, useColorScheme, useTheme} from "@mui/material";
-import {useContext, useMemo, useState} from "react";
+import {Box, Button, IconButton, useColorScheme} from "@mui/material";
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
-import InvertColorsIcon from '@mui/icons-material/InvertColors';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 export const Topbar = () => {
   const { mode, setMode } = useColorScheme();
@@ -25,6 +24,14 @@ export const Topbar = () => {
     setMode(deduceNextColor());
   }
 
+  const goToGh = () => {
+    window.open('https://github.com/Nevysha/wwm-text-color-for-lazy', '_blank');
+  }
+
+  const goToKofi = () => {
+    window.open('https://ko-fi.com/nevysha', '_blank');
+  }
+
   const Icon = (() => {
     switch (mode) {
       case 'dark': return DarkModeOutlinedIcon;
@@ -38,12 +45,15 @@ export const Topbar = () => {
       sx={{
         display: 'flex',
         flexDirection: 'row-reverse',
-        justifyContent: 'space-between',
         }}
     >
       <IconButton onClick={toggleColorMode}>
         <Icon />
       </IconButton>
+      <IconButton onClick={goToGh}>
+        <GitHubIcon />
+      </IconButton>
+      <Button onClick={goToKofi}>KoFi</Button>
     </Box>
   );
 }

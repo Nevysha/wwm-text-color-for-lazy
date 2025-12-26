@@ -1,7 +1,9 @@
-import {type Dispatch, type SetStateAction, useState} from 'react'
+import {type Dispatch, type SetStateAction, useEffect, useState} from 'react'
 import {Button, Divider, Paper, Stack, TextField, Typography} from "@mui/material";
 import {ColorPicker} from "./ColorPicker.tsx";
 import {Topbar} from "./Topbar.tsx";
+
+let initFlag = false;
 
 const App = () => {
 
@@ -96,6 +98,14 @@ const App = () => {
     hex = hex.toLowerCase();
     setter('#' + hex);
   }
+
+  useEffect(() => {
+    if (initFlag) return;
+    initFlag = true;
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    applyColorGradientBetween()
+  }, [applyColorGradientBetween])
 
   return (
     <Stack sx={{gap: '10px'}}>
