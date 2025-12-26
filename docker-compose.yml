@@ -1,0 +1,21 @@
+services:
+  web:
+    # Build the image from the Dockerfile in the current directory
+    build: .
+    # Name the image we build
+    image: wwm-text-color-for-lazy
+    # Give the container a name
+    container_name: wwm-text-color-for-lazy
+    # Port mapping
+    ports:
+      - "8081:80"
+    # Always restart the container if it stops
+    restart: always
+    # Add this section to connect to NPM's network
+    networks:
+      - nginx-proxy-manager_default
+
+# Declare the external network at the bottom
+networks:
+  nginx-proxy-manager_default:
+    external: true
