@@ -1,4 +1,4 @@
-import { Box, IconButton, useColorScheme } from '@mui/material';
+import { Box, IconButton, Typography, useColorScheme } from '@mui/material';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -47,17 +47,20 @@ export const Topbar = () => {
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'row-reverse',
+        flexDirection: 'row',
       }}
     >
-      <IconButton onClick={toggleColorMode}>
-        <Icon />
-      </IconButton>
+      <Typography variant='h6'>
+        Nevysha's Text Color Tool For Where Winds Meet
+      </Typography>
+      <div style={{ flex: 1 }}></div>
+      <div dangerouslySetInnerHTML={{ __html: kofi }}></div>
       <IconButton onClick={goToGh}>
         <GitHubIcon />
       </IconButton>
-      {/*<Button onClick={goToKofi}>KoFi</Button>*/}
-      <div dangerouslySetInnerHTML={{ __html: kofi }}></div>
+      <IconButton onClick={toggleColorMode}>
+        <Icon />
+      </IconButton>
     </Box>
   );
 };
